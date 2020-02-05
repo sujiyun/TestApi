@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.web.mapper.UserMapper">
+
+    <select id="findUserList" resultType="com.web.domain.User">
+        SELECT TOP 100 ID, LOGIN_ID, PASSWORD, NAME
+        FROM S_USER
+    </select>
+
+    <select id="findUserCount" resultType="int">
+        SELECT COUNT(*)
+        FROM S_USER
+    </select>
+
+    <select id="getUserLoginId" parameterType="String" resultType="String">
+        SELECT LOGIN_ID
+        FROM S_USER
+        WHERE ID = #{id}
+    </select>
+
+    <select id="getUserByLoginId" parameterType="String" resultType="com.web.domain.User">
+        SELECT *
+        FROM S_USER
+        WHERE LOGIN_ID = #{login_id}
+    </select>
+
+    <select id="getUser" parameterType="String" resultType="com.web.domain.User">
+        SELECT *
+        FROM S_USER
+        WHERE LOGIN_ID = #{login_id} AND PASSWORD = #{password}
+    </select>
+
+    <insert id="userRegister" parameterType="com.web.domain.User" >
+        INSERT INTO S_USER
+        VALUES (#{id}, #{login_id}, #{password}, #{name})
+    </insert>
+
+</mapper>

@@ -1,0 +1,19 @@
+server:
+  port: 80
+
+spring:
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    url: jdbc:sqlserver://119.194.145.5:1433;DatabaseName=suji_db
+    username: suji
+    password: suji
+  #logback
+  profiles:
+    include:
+      - console-logging
+      - file-logging
+
+---
+server:
+  profiles: dev
+  server: 8090

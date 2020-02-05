@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.web.mapper.BoardMapper">
+
+    <select id="findBoardList" resultType="com.web.domain.Board">
+        SELECT ID, CATEGORY, TITLE, CONTENTS, REG_USER, (SELECT NAME FROM S_USER WHERE ID = REG_USER) REG_USER_NAME, REG_DATE
+        FROM S_BOARD
+        ORDER BY REG_DATE DESC
+    </select>
+
+    <select id="findBoardCount" resultType="int">
+        SELECT COUNT(*)
+        FROM S_BOARD
+    </select>
+
+    <select id="findBoard" parameterType="int" resultType="com.web.domain.Board">
+        SELECT ID, CATEGORY, TITLE, CONTENTS, REG_USER, (SELECT NAME FROM S_USER WHERE ID = REG_USER) REG_USER_NAME, REG_DATE
+        FROM S_BOARD
+        WHERE ID = #{id}
+    </select>
+
+    <insert id="addBoard" parameterType="com.web.domain.Board" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO S_BOARD
+        VALUES (#{category}, #{title}, #{contents}, #{reg_user}, #{reg_date})
+    </insert>
+
+    <update id="editBoard" parameterType="com.web.domain.Board">
+        UPDATE S_BOARD
+        SET CATEGORY = #{category}, TITLE = #{title}, CONTENTS = #{contents}
+        WHERE ID = #{id}
+    </update>
+
+    <delete id="delBoard" parameterType="int">
+        DELETE FROM S_BOARD
+        WHERE ID = #{id}
+    </delete>
+</mapper>
